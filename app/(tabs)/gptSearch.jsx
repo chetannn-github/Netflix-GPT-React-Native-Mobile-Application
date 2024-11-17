@@ -3,11 +3,14 @@ import React, { useRef, useState } from "react"
 import bgImage from"../../assets/photos/bg.jpg"
 import logo from "../../assets/photos/logo.png"
 import { Ionicons } from "@expo/vector-icons"
+import { useSelector } from "react-redux"
+import ExploreMovies from "../../components/HomeSceeen/ExploreMovies"
 
 
 const gptSearch = () => {
     const [isFocused, setIsFocused] = useState(false);
     let searchInput = useRef("");
+    let searchMovieList= useSelector((store)=>(store.movies.searchResult));
    
 
     return (
@@ -49,6 +52,15 @@ const gptSearch = () => {
 
                 
 
+                
+            </ScrollView>
+
+            <ScrollView 
+                className="relative  flex flex-col pb-[80px] pt-5"
+                style={{flex:1}}
+            >
+                
+                <ExploreMovies/>
                 
             </ScrollView>
         

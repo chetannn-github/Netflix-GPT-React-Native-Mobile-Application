@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TMDB_API_OPTIONS } from "../../../public/utils/Constants";
+import { TMDB_API_OPTIONS } from "../scripts/Constants";
 
 
   

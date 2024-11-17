@@ -18,8 +18,8 @@ const _layout = () => {
       tabBarStyle:{
         position:"absolute",
         backgroundColor:"black",
-        borderTopWidth: 1,
-        borderTopColor: "#ff8c00",
+        borderTopWidth: 0,
+        borderTopColor: "#e50914",
         height: 50,
         borderRadius:1,
         alignContent:'center',
