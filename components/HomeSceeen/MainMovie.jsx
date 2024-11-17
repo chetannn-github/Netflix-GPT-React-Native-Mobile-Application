@@ -29,7 +29,7 @@ const MainMovie = () => {
                 <View id="more" className="px-7 py-2 flex items-center justify-center bg-[#FCFCFC] rounded-2xl"><Text>More Info</Text></View>
             </View>
         </View>
-        {/* <VideoBg movieId={id}/> */}
+        <VideoBg movieId={id}/>
         
     </View>
     
