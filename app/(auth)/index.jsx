@@ -14,7 +14,7 @@ const index = () => {
     }
     
     let inputs = useRef({email:"",password:"",username:"", confirmPassword:"" });
-    // let {handleSubmitForm ,errorMsg} = useHandleFormSubmit(inputs.current.email,inputs.current.password,isLoginForm,inputs.current.username);
+    let {handleSubmitForm ,errorMsg} = useHandleFormSubmit(inputs.current.email,inputs.current.password,isLoginForm,inputs.current.username);
 
     return (
         <ScrollView 
@@ -66,8 +66,9 @@ const index = () => {
                         placeholderTextColor="#888" 
                         className="focus:border-primary focus:border-2 h-[7vh] w-full bg-black px-2 text-white mb-4">
                         </TextInput>}
-                    
-                        <Button title={`${isLoginForm? "Login":"Signup"}`} color={"#e50914"}   ></Button>
+                        {errorMsg && <Text className="text-primary mb-3">{errorMsg}</Text>}
+
+                        <Button onPress={()=>handleSubmitForm()} title={`${isLoginForm? "Login":"Signup"}`} color={"#e50914"}   ></Button>
 
                         <Text onPress={handleToggleForm} className="mt-2 text-white">{`${!isLoginForm? "Already user?  Sign in now":"New user?  Sign up now"}`}</Text>
                     </View>
