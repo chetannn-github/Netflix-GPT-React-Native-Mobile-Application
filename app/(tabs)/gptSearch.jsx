@@ -10,10 +10,11 @@ import { TMDB_API_OPTIONS } from "../../scripts/Constants"
 import {modifySearchTxt} from "../../redux/searchSlice"
 import {addSearchResult } from "../../redux/movieSlice"
 import { openai } from "../../scripts/openai"
-
+import SearchingImage from "../../assets/photos/searching.gif"
 
 const gptSearch = () => {
     const [isFocused, setIsFocused] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
     let searchInput = useRef(null);
     let searchMovieList= useSelector((store)=>(store.movies.searchResult));
     let dispatch = useDispatch();
@@ -22,6 +23,7 @@ const gptSearch = () => {
     
     let handleSearch = async(searchInput) =>{
         try {
+            setIsLoading(true);
             dispatch(modifySearchTxt(searchInput));
 
             let apiInput = `Please provide a list of up to six movies based on the query "${searchInput}". The movies should be listed as a comma-separated string (e.g., "Sholay,Ready,Batman,Superman,Spiderman"). If the query includes the title of an actual movie, please return five movies featuring the same actor(s), including the queried movie.`;
@@ -42,6 +44,7 @@ const gptSearch = () => {
         
             let searchResult=  await Promise.all(movie);
             dispatch(addSearchResult(searchResult));
+            setIsLoading(false);
         } catch (error) {
             console.log(error.message);
             
@@ -96,6 +99,7 @@ const gptSearch = () => {
                 style={{flex:1}}
             >
                 <View className=" w-full h-fit ">
+                    {isLoading&& <Image  source={SearchingImage}></Image>}
                     {searchMovieList &&searchMovieList.map((list,index)=>(
                         <MovieList key={index} movieList={list.results}/>
                     ))}
