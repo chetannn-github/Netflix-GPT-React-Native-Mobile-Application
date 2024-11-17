@@ -1,4 +1,4 @@
-import { Button, Image, ImageBackground, Pressable, RefreshControl, ScrollView, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native"
+import { Button, Image, ImageBackground, Pressable, RefreshControl, SafeAreaView, ScrollView, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native"
 import React, { useRef, useState } from "react"
 import bgImage from"../../assets/photos/bg.jpg"
 import logo from "../../assets/photos/logo.png"
@@ -11,6 +11,8 @@ import {modifySearchTxt} from "../../redux/searchSlice"
 import {addSearchResult } from "../../redux/movieSlice"
 import { openai } from "../../scripts/openai"
 import SearchingImage from "../../assets/photos/searching.gif"
+import useSignout from '../../hooks/useSignout'
+import userIcon from "../../assets/photos/usericon.png"
 
 const gptSearch = () => {
     const [isFocused, setIsFocused] = useState(false);
@@ -18,7 +20,8 @@ const gptSearch = () => {
     let searchInput = useRef(null);
     let searchMovieList= useSelector((store)=>(store.movies.searchResult));
     let dispatch = useDispatch();
-  
+    let handleLogout = useSignout();
+    let loggedInUser = useSelector((store) => store.user)
     console.log(searchInput);
     
     let handleSearch = async(searchInput) =>{
@@ -63,9 +66,14 @@ const gptSearch = () => {
                 className="h-[100vh] w-full absolute opacity-50"
                 source={bgImage}>
             </ImageBackground> 
-            <View id="header" className="h-[12vh] w-full  relative bg-opacity-5">
-                <Image source={logo} className="relative h-full w-1/2"></Image>
-            </View>
+            <SafeAreaView id="header" className="h-[12vh] w-full  relative bg-opacity-5 flex flex-row justify-between items-center ">
+                <Image source={logo} resizeMode='contain' className="relative h-full w-[35%]"></Image>
+                <View className="h-full w-[65%] flex flex-row items-center ">
+                    <Image className=" w-[35px] h-[2.5vh]"   resizeMode='contain' source={userIcon}></Image>
+                    <Text className="text-white mr-3">{`Hey!👋 ${loggedInUser?.displayName}`}</Text>
+                    <Button onPress={()=>handleLogout()} color={"#e50914"}  title='Logout'></Button>
+                </View>
+            </SafeAreaView>
             
             <ScrollView  keyboardShouldPersistTaps="never"
                 className="  relative  flex flex-col"
