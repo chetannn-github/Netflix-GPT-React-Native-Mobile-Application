@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Netflix-GPT-App",
-    "slug": "Netflix-GPT-App",
+    "name": "Netflix-GPT",
+    "slug": "Netflix-GPT",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       }
     },
