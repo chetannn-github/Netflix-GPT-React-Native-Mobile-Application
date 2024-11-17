@@ -8,11 +8,17 @@ const MovieCard = ({posterId,title,ratings,overview,id}) => {
   // console.log(posterId)
   if(!posterId){return}
   return (
+    
     <View className="h-[250px] w-[200px]   flex items-center justify-between mr-3">
-       
+          <Link
+        href={{
+          pathname: '/movie/[movieId]',
+          params: { movieId : id},
+        }}>
+          
           <Image className="relative h-[90%] w-full"  resizeMode="cover" source={{uri:`${POSTER_URL}${posterId}`}}  />
           <Text className="text-white">{title}</Text>
-        
+        </Link>
     </View>
   )
 }

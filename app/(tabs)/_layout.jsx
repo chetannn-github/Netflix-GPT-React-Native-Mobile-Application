@@ -42,7 +42,7 @@ const _layout = () => {
         tabBarIcon: ({ color ,focused }) =>  <Ionicons size={26} name={focused? "search" : "search-outline"} color={color} />,
       }}
     />
-  
+    
     
     </Tabs>
   )
