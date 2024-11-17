@@ -1,15 +1,11 @@
-import {  signOut } from "firebase/auth";
-import { auth } from "../firebase";
-import { useDispatch } from "react-redux";
-import { removeUser } from "../reduxStore/userSlice";
+
+import { auth } from "../scripts/firebase";
+import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 let handleSignOut = () =>{
-    signOut(auth).then(() => {
-    console.log("signout successfully")
-    }).catch((error) => {
- 
-});
+   
 
 }
 

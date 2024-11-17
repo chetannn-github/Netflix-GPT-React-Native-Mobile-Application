@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -26,6 +26,7 @@ export default function RootLayout() {
     return null;
   }
 
+ 
   return (
     
       <Provider  store={appStore}>

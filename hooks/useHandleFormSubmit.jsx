@@ -8,6 +8,7 @@ import { addUser, removeUser } from "../redux/userSlice";
 import { checkValidData } from "../scripts/validate";
 import { auth } from "../scripts/firebase";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -27,8 +28,13 @@ const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>
       if(isSignInForm){
         setErrorMsg("");
         signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential)=>{router.replace("/(tabs)/home");})
+        .then((userCredential)=>{
+          let {uid,email,displayName} = userCredential.user;
+          AsyncStorage.setItem("loggedInUser", JSON.stringify({uid,email,displayName}));
+          router.replace("/(tabs)/home")
+        })
           .catch((error) => {
+            console.log(error)
             if (error.message.includes("auth/user-not-found")) {
               setErrorMsg("No user found with this email.");
             } else if (error.message.includes("auth/wrong-password")) {
@@ -54,8 +60,10 @@ const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>
           .then(() => {
           // Profile updated!
             const {uid,email,displayName} = auth.currentUser;
-            // dispatch(addUser({uid,email,displayName}));
+              AsyncStorage.setItem("loggedInUser", JSON.stringify({uid,email,displayName}));
             router.replace("/(tabs)/home")
+            // dispatch(addUser({uid,email,displayName}));
+            
           })
           .catch((error) => {
             console.log(error)

@@ -1,13 +1,52 @@
 
-import React from 'react'
-import {  Tabs } from 'expo-router'
+import React, { useEffect } from 'react'
+import {  router, Tabs } from 'expo-router'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import useNowPlayingMovies from '../../hooks/useNowPlayingMovies';
 import usePopularMovies from '../../hooks/usePopularMovies';
 import useTopRated from '../../hooks/useTopRatedMovies';
+import { auth } from '../../scripts/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 
+
+import { addUser, removeUser } from '../../redux/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const _layout = () => {
+  const dispatch = useDispatch();
+  const loadUserFromAsyncStorage = async () => {
+    try {
+        const user = await AsyncStorage.getItem('loggedInUser');
+        if (user !== null) {
+            return JSON.parse(user);
+        }
+    } catch (error) {
+        console.error("Failed to load user from AsyncStorage", error);
+    }
+    return null;
+};
+
+useEffect(() => {
+    const initializeUser  = async () => {
+        const user = await loadUserFromAsyncStorage();
+        console.log("loggedinuser => " + user);
+        if (user) {
+            dispatch(addUser(user));
+            
+        }else{
+          router.replace("/(auth)")
+        }
+        
+         
+    };
+    initializeUser ();
+}, []);
+
+
+
+
+
   useNowPlayingMovies();
   usePopularMovies();
   useTopRated();
