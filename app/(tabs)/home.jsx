@@ -12,7 +12,7 @@ import MainMovie from '../../components/HomeSceeen/MainMovie'
 const home = () => {
   return (
     <ScrollView
-            className="relative flex flex-col  bg-black " 
+            className="relative flex flex-col mt-2  bg-black " 
             keyboardShouldPersistTaps= "never"
             contentContainerStyle={{ flexGrow: 1 }}
         >

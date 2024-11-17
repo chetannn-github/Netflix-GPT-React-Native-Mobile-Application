@@ -6,6 +6,7 @@ import 'react-native-reanimated';
 import "../global.css";
 import { Provider } from "react-redux"
 import appStore from "../redux/appstore.js"
+import { StatusBar } from 'expo-status-bar';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -29,7 +30,7 @@ export default function RootLayout() {
     
       <Provider  store={appStore}>
 
-     
+     <StatusBar backgroundColor='#000000'></StatusBar>
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{headerShown: false}} />

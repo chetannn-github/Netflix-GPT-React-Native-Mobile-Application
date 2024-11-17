@@ -54,7 +54,7 @@ const gptSearch = () => {
 
     return (
         <ScrollView 
-            className="relative flex flex-col   bg-black " 
+            className="relative flex flex-col mt-2  bg-black " 
             keyboardShouldPersistTaps= "never"
             contentContainerStyle={{ flexGrow: 1 }}
         >
