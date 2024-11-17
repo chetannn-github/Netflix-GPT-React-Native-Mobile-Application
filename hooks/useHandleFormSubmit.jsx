@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../redux/userSlice";
 import { checkValidData } from "../scripts/validate";
 import { auth } from "../scripts/firebase";
+import { router } from "expo-router";
 
 
 
@@ -15,18 +16,18 @@ import { auth } from "../scripts/firebase";
 const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>{
     const dispatch = useDispatch();
     let [errorMsg , setErrorMsg] = useState(null);
-    const navigate = useNavigate();
-  // console.log(email.current, password.current);
-    let handleSubmitForm = () =>{
-      let msg = isSignInForm ? checkValidData(email.current.value,password.current.value, name.current?.value):  checkValidData(email.current.value,password.current.value);
-      setErrorMsg(msg);
 
-      if(msg){return}
   
+    let handleSubmitForm = () =>{
+      // let msg = isSignInForm ? checkValidData(email,password):  checkValidData(email,password);
+      // setErrorMsg(msg);
+      console.log(email);
+
+      // if(msg){return}
       if(isSignInForm){
-          setErrorMsg("");
-          signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-          .then((userCredential)=>{navigate('/');})
+        setErrorMsg("");
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential)=>{router.replace("/(tabs)/home");})
           .catch((error) => {
             if (error.message.includes("auth/user-not-found")) {
               setErrorMsg("No user found with this email.");
@@ -43,25 +44,22 @@ const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>
             }
           });
       }else{
-            setErrorMsg(null);
-            //signup
-            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-            .then((userCredential) => {
-              updateProfile(auth.currentUser, {
-              displayName: name.current.value, photoURL: ""
-              })
-              .then(() => {
-              // Profile updated!
-                const {uid,email,displayName} = auth.currentUser;
-                // dispatch(addUser({uid,email,displayName}));
-                router.replace("/(tabs)")
-              })
-              .catch((error) => {
-       
-          });
-
-
-
+        setErrorMsg(null);
+        //signup
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+          displayName: name, photoURL: ""
+          })
+          .then(() => {
+          // Profile updated!
+            const {uid,email,displayName} = auth.currentUser;
+            // dispatch(addUser({uid,email,displayName}));
+            router.replace("/(tabs)/home")
+          })
+          .catch((error) => {
+            console.log(error)
+      });
 
       })
       .catch((error) => {
@@ -73,12 +71,9 @@ const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>
         setErrorMsg("Weak password.");
       } else {
         setErrorMsg("An unknown error occurred.");
-      
       }
     });
-    }
-
-
+      }
 
   }
 
