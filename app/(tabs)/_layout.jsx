@@ -2,20 +2,26 @@
 import React from 'react'
 import {  Tabs } from 'expo-router'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import useNowPlayingMovies from '../../hooks/useNowPlayingMovies';
+import usePopularMovies from '../../hooks/usePopularMovies';
+import useTopRated from '../../hooks/useTopRatedMovies';
 
 
 const _layout = () => {
+  useNowPlayingMovies();
+  usePopularMovies();
+  useTopRated();
   return (
     
     <Tabs screenOptions={{ 
-      tabBarActiveTintColor: '#FFA001' ,
+      tabBarActiveTintColor: '#e50914' ,
       tabBarStyle:{
         position:"absolute",
-        backgroundColor:"#161622",
+        backgroundColor:"black",
         borderTopWidth: 1,
-        borderTopColor: "#232533",
+        borderTopColor: "#ff8c00",
         height: 50,
-        borderRadius:16,
+        borderRadius:1,
         alignContent:'center',
         justifyContent:'center'
       }}}
@@ -32,8 +38,8 @@ const _layout = () => {
       name="gptSearch"
       options={{
         headerShown:false,
-        title:"Explore",
-        tabBarIcon: ({ color ,focused }) =>  <Ionicons size={26} name={focused? "compass" : "compass-outline"} color={color} />,
+        title:"GPT Search",
+        tabBarIcon: ({ color ,focused }) =>  <Ionicons size={26} name={focused? "search" : "search-outline"} color={color} />,
       }}
     />
   

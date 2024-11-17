@@ -1,5 +1,6 @@
 import MovieCard from "./MovieCard"
-import "../Stylesheets/MovieList.css"
+
+import { ScrollView, Text, View } from "react-native";
 
 const MovieList = ({movieList , title}) => {
   // let movieList = useSelector((store) =>store.movies.nowPlaying);
@@ -8,14 +9,20 @@ const MovieList = ({movieList , title}) => {
   
   
   return (
-    <div id="movie-list-container">
-      <div id="title">
-        <h5>{title}</h5>
-      </div>
-      <div id="movielist">
+    <View className="mb-5 w-fit">
+      <View id="title">
+        <Text className="text-white">{title}</Text>
+      </View>
+      <ScrollView
+        horizontal 
+        showsHorizontalScrollIndicator={false} 
+       
+      >
+        
         {movieList.map ((item,index)=>(<MovieCard id={item.id} key={index} posterId={item.poster_path } overview = {item.overview} ratings = {item.vote_average} title = {item.title}/>))}
-      </div>
-    </div>
+      
+      </ScrollView>
+    </View>
     
   )
 }

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { checkValidData } from "../validate";
-import { auth } from "../firebase";
+
+
 import { createUserWithEmailAndPassword ,onAuthStateChanged,signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+
 import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../reduxStore/userSlice";
+import { addUser, removeUser } from "../redux/userSlice";
+import { checkValidData } from "../scripts/validate";
+import { auth } from "../scripts/firebase";
 
 
 
@@ -52,7 +54,7 @@ const useHandleFormSubmit = (email,password,isSignInForm,name="testusername") =>
               // Profile updated!
                 const {uid,email,displayName} = auth.currentUser;
                 // dispatch(addUser({uid,email,displayName}));
-                navigate("/");
+                router.replace("/(tabs)")
               })
               .catch((error) => {
        

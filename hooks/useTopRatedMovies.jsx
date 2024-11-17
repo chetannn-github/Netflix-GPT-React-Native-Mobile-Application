@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addTopRated} from "../reduxStore/movieSlice";
-import { TMDB_API_OPTIONS } from "../../../public/utils/Constants";
+import { addTopRated} from "../redux/movieSlice";
+import { TMDB_API_OPTIONS } from "../scripts/Constants";
 
 const useTopRated = () =>{
     let dispatch = useDispatch();
