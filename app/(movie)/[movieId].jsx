@@ -6,7 +6,7 @@ import { useLocalSearchParams } from 'expo-router';
 const movie = () => {
   const {movieId } = useLocalSearchParams();
   return (
-    <SafeAreaView  className=" w-[100vw] bg-black">
+    <SafeAreaView  className="h-[100vh] w-[100vw] bg-black pb-4">
        
             <MovieInfo  movieId={movieId}/>
       

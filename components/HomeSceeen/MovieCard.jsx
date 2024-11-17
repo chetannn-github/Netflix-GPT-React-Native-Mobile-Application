@@ -12,7 +12,7 @@ const MovieCard = ({posterId,title,ratings,overview,id}) => {
     <View className="h-[250px] w-[200px]   flex items-center justify-between mr-3">
           <Link
         href={{
-          pathname: '/movie/[movieId]',
+          pathname: '/[movieId]',
           params: { movieId : id},
         }}>
           
