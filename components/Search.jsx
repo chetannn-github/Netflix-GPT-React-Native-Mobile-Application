@@ -15,7 +15,7 @@ const Search = () => {
     let dispatch = useDispatch();
   
  
-    let handleSearch = async(searchTxt) =>{
+    let handleSearch = async(searchInput) =>{
         dispatch(modifySearchTxt(searchTxt));
 
         let apiInput = `Please provide a list of up to six movies based on the query "${searchTxt}". The movies should be listed as a comma-separated string (e.g., "Sholay,Ready,Batman,Superman,Spiderman"). If the query includes the title of an actual movie, please return five movies featuring the same actor(s), including the queried movie.`;

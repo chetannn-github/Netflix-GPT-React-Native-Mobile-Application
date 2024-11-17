@@ -3,15 +3,51 @@ import React, { useRef, useState } from "react"
 import bgImage from"../../assets/photos/bg.jpg"
 import logo from "../../assets/photos/logo.png"
 import { Ionicons } from "@expo/vector-icons"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import ExploreMovies from "../../components/HomeSceeen/ExploreMovies"
+import MovieList from "../../components/HomeSceeen/MovieList"
+import { TMDB_API_OPTIONS } from "../../scripts/Constants"
+import {modifySearchTxt} from "../../redux/searchSlice"
+import {addSearchResult } from "../../redux/movieSlice"
+import { openai } from "../../scripts/openai"
 
 
 const gptSearch = () => {
     const [isFocused, setIsFocused] = useState(false);
-    let searchInput = useRef("");
+    let searchInput = useRef(null);
     let searchMovieList= useSelector((store)=>(store.movies.searchResult));
-   
+    let dispatch = useDispatch();
+  
+    console.log(searchInput);
+    
+    let handleSearch = async(searchInput) =>{
+        try {
+            dispatch(modifySearchTxt(searchInput));
+
+            let apiInput = `Please provide a list of up to six movies based on the query "${searchInput}". The movies should be listed as a comma-separated string (e.g., "Sholay,Ready,Batman,Superman,Spiderman"). If the query includes the title of an actual movie, please return five movies featuring the same actor(s), including the queried movie.`;
+    
+            const gptResults= await openai.chat.completions.create({
+              messages: [{ role: 'user', content: apiInput }],
+              model: 'gpt-3.5-turbo',
+            });
+            let moviesListArray=  gptResults.choices[0].message.content.split(",");
+            console.log(moviesListArray)
+    
+            let movie = moviesListArray.map(async(item,index) =>{
+                const url = `https://api.themoviedb.org/3/search/movie?query=${moviesListArray[index]}&include_adult=false&page=1`;
+                let data = await fetch(url,TMDB_API_OPTIONS);
+                let json = await data.json();
+                return json;
+            }) 
+        
+            let searchResult=  await Promise.all(movie);
+            dispatch(addSearchResult(searchResult));
+        } catch (error) {
+            console.log(error.message);
+            
+        }
+      
+    }
 
     return (
         <ScrollView 
@@ -41,7 +77,7 @@ const gptSearch = () => {
                     onBlur={() => setIsFocused(false)}
                     className="h-[7vh] w-[85vw] bg-black px-2 text-white mb-4">
                     </TextInput>
-                   <Pressable className="relative min-h-[7vh] w-[12vw]  overflow-hidden">
+                   <Pressable onPress={()=>handleSearch(searchInput.current)} className="relative min-h-[7vh] w-[12vw]  overflow-hidden">
                     <View className="h-[7vh] bg-black flex items-center justify-center ">
                         <Ionicons name="search" color={"#e50914"} size={25}> </Ionicons>
                     </View>
@@ -59,8 +95,13 @@ const gptSearch = () => {
                 className="relative  flex flex-col pb-[80px] pt-5"
                 style={{flex:1}}
             >
+                <View className=" w-full h-fit ">
+                    {searchMovieList &&searchMovieList.map((list,index)=>(
+                        <MovieList key={index} movieList={list.results}/>
+                    ))}
+                </View>
+                  
                 
-                <ExploreMovies/>
                 
             </ScrollView>
         

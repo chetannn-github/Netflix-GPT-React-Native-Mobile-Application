@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import {Background} from "./Background";
-import Search from './Search';
+import Search from '../Search';
 import { useSelector } from 'react-redux';
 import MovieList from './MovieList';
 import "../Stylesheets/GptSearch.css"

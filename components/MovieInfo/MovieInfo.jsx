@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { TMDB_API_OPTIONS } from '../../public/utils/Constants';
+import { TMDB_API_OPTIONS } from '../../scripts/Constants';
 import VideoBg from './VideoBg';
 import "../Stylesheets/MovieInfo.css"
 import "../Stylesheets/MainMovie.css"
+import { View } from 'react-native';
 
 const MovieInfo = () => {
     let [movieInfo ,setMovieInfo] = useState(null);
@@ -21,17 +22,17 @@ const MovieInfo = () => {
     if (!movieInfo) return
     let {title,overview,}= movieInfo;
 
-return ( <div id="movieinfo-container">
+return ( <View id="movieinfo-container">
         <VideoBg movieId={id}/>
-        <div id="movie-info">
-            <div id="title">{title}</div>
-            <div id= "overview">{overview}</div>
-            <div id="buttons">
-                <div id="play">▶   Play</div>
-                <div id="more">More Info</div>
-            </div>
-        </div>
-        </div>
+        <View id="movie-info">
+            <View id="title">{title}</View>
+            <View id= "overview">{overview}</View>
+            <View id="buttons">
+                <View id="play">▶   Play</View>
+                <View id="more">More Info</View>
+            </View>
+        </View>
+        </View>
   )
 }
 
