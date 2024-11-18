@@ -10,7 +10,6 @@ import { TMDB_API_OPTIONS } from "../../scripts/Constants"
 import {modifySearchTxt} from "../../redux/searchSlice"
 import {addSearchResult } from "../../redux/movieSlice"
 import { openai } from "../../scripts/openai"
-import SearchingImage from "../../assets/photos/searching.gif"
 import useSignout from '../../hooks/useSignout'
 import userIcon from "../../assets/photos/usericon.png"
 
@@ -107,7 +106,7 @@ const gptSearch = () => {
                 style={{flex:1}}
             >
                 <View className=" w-full h-fit ">
-                    {isLoading&& <Image  source={SearchingImage}></Image>}
+                    
                     {searchMovieList &&searchMovieList.map((list,index)=>(
                         <MovieList key={index} movieList={list.results}/>
                     ))}
